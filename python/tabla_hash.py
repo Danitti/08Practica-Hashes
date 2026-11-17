@@ -4,14 +4,20 @@
 def hash_cadena(clave, m):
     """Horner: h=0; por letra h=(31*h+valor)%m; a=1,...,z=26.
 
-    '' -> 0. m positivo; clave solo a..z. Tiempo O(?), espacio O(?).
+    '' -> 0. m positivo; clave solo a..z. Tiempo O(n), espacio O(1).
     No usar hash() de Python. La validación ya está dada.
     """
     if m <= 0:
         raise ValueError('m debe ser positivo')
     if not all('a' <= c <= 'z' for c in clave):
         raise ValueError('Solo letras a..z')
-    raise NotImplementedError('TODO hash_cadena')
+    
+    resultado = 0
+    for caracter in clave:
+        valor = ord(caracter) - ord('a') +1 
+        resultado = (31*resultado + valor) % m
+    
+    return resultado
 
 
 class TablaHash:
@@ -25,16 +31,44 @@ class TablaHash:
         """Insertar o actualizar el entero asociado. No duplicar claves.
 
         Colisión: comparar la clave real dentro de la cubeta.
-        No usar dict/set ni cambiar m. Coste O(?), incluyendo el hash.
+        No usar dict/set ni cambiar m. Coste O(m), incluyendo el hash.
         """
-        raise NotImplementedError('TODO guardar')
+        
+        hash_clave = hash_cadena(clave, len(self._cubetas))
+
+        if self._cubetas[hash_clave] is None:
+            self._cubetas[hash_clave] = [(clave, valor)]
+            self._tamano +=1
+            return
+            
+        for i, tupla_contenida in enumerate(self._cubetas[hash_clave]):
+            clave_existente, _ = tupla_contenida
+            if clave == clave_existente:
+                self._cubetas[hash_clave][i] = (clave, valor)
+                return
+        
+        self._cubetas[hash_clave].append((clave, valor))
+        self._tamano += 1
+            
+        
+        
+        
 
     def obtener(self, clave):
         """Entero asociado o None si falta; 0 es un valor válido.
 
         No insertar al consultar. Coste O(?), incluyendo el hash.
         """
-        raise NotImplementedError('TODO obtener')
+        hash_clave = hash_cadena(clave, len(self._cubetas))
+        
+        if self._cubetas[hash_clave] is None:
+            return None
+        
+        for clave_existente, valor_existente in self._cubetas[hash_clave]:
+            if clave_existente == clave:
+                return valor_existente
+            
+        return None
 
     def borrar(self, clave):
         """Dado como ejemplo: quitar solo la clave, sin romper la cadena."""
