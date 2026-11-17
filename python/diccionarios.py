@@ -8,7 +8,20 @@ def frecuencias(palabras):
     No usar Counter, list.count ni ordenar para contar.
     Tiempo esperado O(?); espacio O(?). Explicar el peor caso en RESPUESTAS.
     """
-    raise NotImplementedError("TODO frecuencias")
+    
+    diccionario_conteo = {}
+    
+    if palabras == []:
+        return {}
+    
+    for palabra in palabras:
+        if palabra not in diccionario_conteo:
+            diccionario_conteo[palabra] = 0
+        diccionario_conteo[palabra] += 1
+    
+    return diccionario_conteo
+    
+    
 
 
 def primera_unica(palabras):
@@ -18,8 +31,17 @@ def primera_unica(palabras):
     No depender del orden de las claves del diccionario; no modificar datos.
     Tiempo esperado O(?); espacio O(?).
     """
-    raise NotImplementedError("TODO primera_unica")
+    
+    if palabras == []:
+        return None
+    
+    diccionario_conteo = frecuencias(palabras)
+    
+    for palabra in palabras:
+        if diccionario_conteo[palabra] == 1:
+            return palabra
+    
+    return None
 
 
 
-#Cambio
