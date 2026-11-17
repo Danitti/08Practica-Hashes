@@ -31,22 +31,64 @@ class Trie:
         """
         if not self._valida(palabra):
             raise ValueError("Solo se admiten letras a..z")
-        # TODO: bajar creando los hijos ausentes y marcar el final.
-        raise NotImplementedError("TODO insertar")
+        
+        actual = self.raiz
+        
+        
+        for caracter in palabra:
+            if caracter not in actual.hijos:
+                nuevo = Nodo()
+                actual.hijos[caracter] = nuevo
+                self._nodos += 1
+                
+            actual = actual.hijos[caracter]
+        
+        actual.fin_de_palabra = True
+                
+                
 
     def _bajar(self, cadena):
         """Nodo del prefijo o None. No insertar ni modificar nada. O(?)."""
         if not self._valida(cadena):
             return None
-        raise NotImplementedError("TODO _bajar")
+        
+        actual = self.raiz
+        
+        for caracter in cadena:
+            if caracter not in actual.hijos:
+                return None
+            
+            actual = actual.hijos[caracter]
+        
+        return actual
 
     def buscar(self, palabra):
         """True solo si es una palabra insertada, no un mero prefijo. O(?)."""
-        raise NotImplementedError("TODO buscar")
+        
+        nodo_final = self._bajar(palabra)
+        
+        if nodo_final is None:
+            return False
+        
+        if nodo_final.fin_de_palabra:
+            return True
+        else:
+            return False
 
     def empieza_por(self, prefijo):
         """True si existe ese camino. '' -> True, incluso en trie vacío. O(?)."""
-        raise NotImplementedError("TODO empieza_por")
+        if prefijo == '':
+            return True
+        
+        if self.raiz is None:
+            return True
+        
+        nodo_final = self._bajar(prefijo)
+        
+        if nodo_final is not None:
+            return True
+        
+        return False
 
     def autocompletar(self, prefijo):
         """Dado: devuelve palabras únicas en orden alfabético; no modifica trie.
