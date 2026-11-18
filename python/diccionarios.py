@@ -6,7 +6,7 @@ def frecuencias(palabras):
 
     No modificar la lista. Vacía -> {}. Se reciben palabras ya normalizadas.
     No usar Counter, list.count ni ordenar para contar.
-    Tiempo esperado O(?); espacio O(?). Explicar el peor caso en RESPUESTAS.
+    Tiempo esperado O(n); espacio O(n palabras distintas). Explicar el peor caso en RESPUESTAS.
     """
     
     diccionario_conteo = {}
@@ -29,7 +29,7 @@ def primera_unica(palabras):
 
     Devuelve None si no hay ninguna. Usar frecuencias y recorrer la entrada.
     No depender del orden de las claves del diccionario; no modificar datos.
-    Tiempo esperado O(?); espacio O(?).
+    Tiempo esperado O(n); espacio O(u).
     """
     
     if palabras == []:

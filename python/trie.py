@@ -27,7 +27,7 @@ class Trie:
         """Conjunto: repetir una palabra no crea nodos ni duplicados.
 
         Se permite ''. Si contiene algo fuera de a..z, ValueError sin cambios.
-        Tiempo O(?); nodos nuevos como máximo O(?).
+        Tiempo O(len(palabra)); nodos nuevos como máximo O(len(palabra)).
         """
         if not self._valida(palabra):
             raise ValueError("Solo se admiten letras a..z")
@@ -48,7 +48,7 @@ class Trie:
                 
 
     def _bajar(self, cadena):
-        """Nodo del prefijo o None. No insertar ni modificar nada. O(?)."""
+        """Nodo del prefijo o None. No insertar ni modificar nada. O(len(cadena))."""
         if not self._valida(cadena):
             return None
         
@@ -63,7 +63,7 @@ class Trie:
         return actual
 
     def buscar(self, palabra):
-        """True solo si es una palabra insertada, no un mero prefijo. O(?)."""
+        """True solo si es una palabra insertada, no un mero prefijo. O(len(palabra))."""
         
         nodo_final = self._bajar(palabra)
         
@@ -76,7 +76,7 @@ class Trie:
             return False
 
     def empieza_por(self, prefijo):
-        """True si existe ese camino. '' -> True, incluso en trie vacío. O(?)."""
+        """True si existe ese camino. '' -> True, incluso en trie vacío. O(len(prefijo))."""
         if prefijo == '':
             return True
         

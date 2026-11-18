@@ -4,7 +4,7 @@
 def hash_cadena(clave, m):
     """Horner: h=0; por letra h=(31*h+valor)%m; a=1,...,z=26.
 
-    '' -> 0. m positivo; clave solo a..z. Tiempo O(n), espacio O(1).
+    '' -> 0. m positivo; clave solo a..z. Tiempo O(len(clave)), espacio O(1).
     No usar hash() de Python. La validación ya está dada.
     """
     if m <= 0:
@@ -31,7 +31,7 @@ class TablaHash:
         """Insertar o actualizar el entero asociado. No duplicar claves.
 
         Colisión: comparar la clave real dentro de la cubeta.
-        No usar dict/set ni cambiar m. Coste O(m), incluyendo el hash.
+        No usar dict/set ni cambiar m. Coste O(len(clave) + m), incluyendo el hash.
         """
         
         hash_clave = hash_cadena(clave, len(self._cubetas))
@@ -57,7 +57,7 @@ class TablaHash:
     def obtener(self, clave):
         """Entero asociado o None si falta; 0 es un valor válido.
 
-        No insertar al consultar. Coste O(?), incluyendo el hash.
+        No insertar al consultar. Coste O(len(clave) + m), incluyendo el hash.
         """
         hash_clave = hash_cadena(clave, len(self._cubetas))
         
