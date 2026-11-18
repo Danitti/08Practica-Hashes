@@ -104,10 +104,21 @@ class Trie:
         return salida
 
     @staticmethod
-    def _recoger(nodo, camino, salida):
+    def _recoger(nodo: Nodo, camino: list[str], salida: list[str]):
         """Preorden: camino es lista de letras; restaurarla antes de volver.
 
         Añadir una COPIA de la palabra si es terminal; recorrer hijos en orden.
         No ordenar la salida al final. Se puede usar sorted(nodo.hijos).
         """
-        raise NotImplementedError("TODO _recoger")
+        
+        if nodo.fin_de_palabra:
+            salida.append("".join(camino))
+            
+        for letra, nodo_hijo in sorted(nodo.hijos.items()):
+            if nodo_hijo is not None:
+                camino.append(letra)
+                Trie._recoger(nodo_hijo, camino, salida)
+                camino.pop()
+        
+                
+        
